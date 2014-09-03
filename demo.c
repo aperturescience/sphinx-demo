@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <pocketsphinx.h>
 
 int main(int argc, char *argv[]) {
@@ -12,12 +13,13 @@ int main(int argc, char *argv[]) {
 
     // instantiate decoder
     ps_decoder_t *decoder = ps_init(config);
+    cmd_ln_free_r(config);
 
     // open file and parse it
     FILE *file = fopen("goforward.raw", "rb");
-
     // decode raw file
     int samples = ps_decode_raw(decoder, file, NULL, -1);
+    fclose(file);
 
     // create hypothesis
     char const *utterance;
@@ -26,6 +28,8 @@ int main(int argc, char *argv[]) {
     char const *hypothesis = ps_get_hyp(decoder, &score, &utterance);
 
     printf("Recognized: %s\n", hypothesis);
+
+    ps_free(decoder);
 
     return 0;
 }
