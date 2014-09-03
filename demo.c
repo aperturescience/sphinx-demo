@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     ps_decoder_t *decoder = ps_init(config);
 
     // open file and parse it
-    FILE *file = fopen("goforward.wav", "rb");
+    FILE *file = fopen("goforward.raw", "rb");
     // decode raw file
     int samples = ps_decode_raw(decoder, file, NULL, -1);
     fclose(file);
